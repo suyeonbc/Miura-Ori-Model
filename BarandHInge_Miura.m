@@ -9,7 +9,7 @@ ori.beta = deg2rad(60);
 % Origami Structure
 ori.nodenum = 9; % node number
 n = 3 * ori.nodenum; % Number of degrees of freedom
-ori.n = n;
+ori.n = n; %dfk
 
 % Define origami Structure
 ori=generate_miuraori_structure(1);
