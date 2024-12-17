@@ -77,7 +77,6 @@ quit = 5000;
 current_disp = zeros(n,quit); 
 
 for i = 1:1:quit %length(ts)
-    i
     current_disp(active,i) = displacements(i, :);
     current_disp(:,i) = initX + current_disp(:,i);
 
