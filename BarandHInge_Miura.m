@@ -2,6 +2,9 @@
 % Miura-Ori Origami 1 cell
 % Trying to update to n*m cell
 
+% Define origami Structure
+ori=generate_miuraori_structure(1);
+
 % Initial Setting
 ori.a = 0.1; % m
 ori.beta = deg2rad(60);
@@ -9,10 +12,7 @@ ori.beta = deg2rad(60);
 % Origami Structure
 ori.nodenum = 9; % node number
 n = 3 * ori.nodenum; % Number of degrees of freedom
-ori.n = n; %dfk
-
-% Define origami Structure
-ori=generate_miuraori_structure(1);
+ori.n = n; 
 
 % Constraints
 remove_index = sort([1 2 3 5 8 9 12 18 21 27]');
