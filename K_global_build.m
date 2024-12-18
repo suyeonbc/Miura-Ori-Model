@@ -34,8 +34,8 @@ for i = 1:size(node_bar,1)
     e12 = vec_12' / l12;
     l12_0 = l12_ori(i);
     
-    dfidxi = -e12.' * e12 + (l12_0/l12 - 1)*eye(3);
-    dfidxj = e12.' * e12 - (l12_0/l12 - 1)*eye(3);
+    dfidxi = -e12.' * e12 + (-l12/l12_0 + 1)*eye(3);
+    dfidxj = e12.' * e12 - (-l12/l12_0 + 1)*eye(3);
 
     % Calculate local stiffness matrix   
     k12_bar = ori.k_bar / l12 .* [dfidxi dfidxj; dfidxj dfidxi];    
