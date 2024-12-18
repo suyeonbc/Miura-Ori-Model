@@ -40,7 +40,7 @@ initial_state = [initX_reduced; initV_reduced]; % Flattened into a single vector
 F_ext = zeros(sum(active), 1);
 % F_ext(3) = 10; 
 
-% Define Crease and Facet Hinge Strengths
+% Define Crease and Facet Hinge
 ori.k_crease = 0.01; % Nm/rad
 ori.k_facet = 100;  % Nm/rad
 ori.k_bar = 1.2*1e6; % N/m
