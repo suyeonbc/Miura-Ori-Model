@@ -1,14 +1,10 @@
 % Global stiffness matrix
-function K = K_global_build(x, radtheta, ori)
+function K = K_global_build(x, ori)
 
 % Extract necessary parameters from ori
 node_bar = ori.node_bar;
 node_crease = ori.node_crease;
 node_facet =ori.node_facethinge;
-theta = radtheta;
-theta0 = ori.theta0;
-dtheta = (theta0-theta);
-dtheta_fac = 0;
 
 l12_ori = ori.barlength;
 n=3*ori.nodenum;
@@ -70,7 +66,13 @@ for i = 1:length(node_crease(:,1))
     norm_m=norm(m);
     norm_n=norm(n);
     l13 = norm(r31);
+    dot_product = dot(m, n);
+    cos_theta = dot_product / (norm_m * norm_n);
+    cos_theta = max(min(cos_theta, 1), -1);
+    theta_rad = acos(cos_theta);
+    %theta_deg = rad2deg(theta_rad);
 
+    dtheta = pi-theta_rad;
     % node 4 stiffness
     kj4 = (dot(r41,r31)/l13^2-1)*l13^2/norm_m^4*(m.'*m) + dot(r32,r31)/norm_m^2/norm_n^2*(n.'*m) + ...
         dtheta*(-m.'*r31/l13/norm_m^2+(m.'*cross(r31-r41,m)+cross(r31-r41,m).'*m)*l13/norm_m^4)'; 
@@ -143,6 +145,13 @@ for i = 1:length(node_facet(:,1))
     norm_m=norm(m);
     norm_n=norm(n);
     l13 = norm(r31);
+    dot_product = dot(m, n);
+    cos_theta = dot_product / (norm_m * norm_n);
+    cos_theta = max(min(cos_theta, 1), -1);
+    theta_rad = acos(cos_theta);
+    %theta_deg = rad2deg(theta_rad);
+
+    dtheta_fac = pi-theta_rad;
 
     % node 4 stiffness
     kj4 = (dot(r41,r31)/l13^2-1)*l13^2/norm_m^4*(m.'*m) + dot(r32,r31)/norm_m^2/norm_n^2*(n.'*m) + ...
@@ -194,12 +203,12 @@ for i = 1:length(node_facet(:,1))
             K_hinge_facet(ind_K_start(4):ind_K_end(4), ind_K_start(j):ind_K_end(j)) + k4(:, (j-1)*3+1:j*3);
     end
 
-    fprintf('%d번째 spring of facet \n', i)
+    fprintf('%dth spring of facet \n', i)
 end
 
-K_bar
-K_hinge_crease
-K_hinge_facet
+%K_bar
+%K_hinge_crease
+%K_hinge_facet
 
 K = K_bar+K_hinge_crease+K_hinge_facet; % Return the global stiffness matrix
 end

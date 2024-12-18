@@ -76,8 +76,7 @@ B_full = zeros(2*n,length(ori.crease_actuated),n_region);
 for i = 1:n_region
     fprintf('%d번째 linearization\n', i)
     p=ori.p_op(:, i);
-    radtheta = ori.op_angle(i);
-    K(:,:,i) = K_global_build(p, radtheta, ori);
+    K(:,:,i) = K_global_build(p, ori);
     A_full(:,:,i) = [zeros(n), eye(n); ori.M\K(:,:,i), ori.M\ori.K_damp];
     C_full(:,:,i) = C_build(p, i, ori);
     B_full(:,:,i) = crease_actuation_matrix(i,ori);
